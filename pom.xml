@@ -102,7 +102,6 @@
                             <goal>test</goal>
                         </goals>
                         <configuration>
-                            <failOnIssues>false</failOnIssues>
                             <skip>${snyk.skip}</skip>
                         </configuration>
                     </execution>
@@ -113,15 +112,11 @@
                             <goal>monitor</goal>
                         </goals>
                         <configuration>
-                            <failOnIssues>false</failOnIssues>
                             <skip>${snyk.skip}</skip>
                         </configuration>
                     </execution>
                 </executions>
                 <configuration>
-                    <failOnIssues>false</failOnIssues>
-                    <org>snyk-org</org>
-                    <severityThreshold>high</severityThreshold>
                     <skip>${snyk.skip}</skip>
                 </configuration>
             </plugin>
