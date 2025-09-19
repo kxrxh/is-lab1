@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -45,7 +46,7 @@ public class AuthController {
             AuthResponse response = new AuthResponse(token, user.getUsername(), user.getName());
             return ResponseEntity.ok(response);
 
-        } catch (Exception e) {
+        } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().body("Invalid username or password");
         }
     }

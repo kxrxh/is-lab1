@@ -101,7 +101,7 @@ public class ApiController {
 
         public DataResponse(String currentUser, List<String> allUsers) {
             this.currentUser = currentUser;
-            this.allUsers = allUsers;
+            this.allUsers = allUsers == null ? null : List.copyOf(allUsers);
         }
 
         public String getCurrentUser() {
@@ -113,11 +113,11 @@ public class ApiController {
         }
 
         public List<String> getAllUsers() {
-            return allUsers;
+            return allUsers == null ? null : List.copyOf(allUsers);
         }
 
         public void setAllUsers(List<String> allUsers) {
-            this.allUsers = allUsers;
+            this.allUsers = allUsers == null ? null : List.copyOf(allUsers);
         }
     }
 }
