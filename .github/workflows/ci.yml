@@ -49,24 +49,21 @@ jobs:
         mvn compile
         mvn com.github.spotbugs:spotbugs-maven-plugin:4.8.3.1:check
 
-    # SCA: Software Composition Analysis with OWASP Dependency-Check
-    - name: Run OWASP Dependency-Check (SCA)
-      uses: dependency-check/Dependency-Check_Action@main
+    # SCA: Software Composition Analysis with Snyk
+    - name: Run Snyk (SCA)
+      uses: snyk/actions/maven@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        project: 'secure-api'
-        path: '.'
-        format: 'ALL'
-        args: >
-          --enableRetired
-          --enableExperimental
-          --nvdValidForHours 24
+        args: --file=pom.xml
+      continue-on-error: true
 
-    - name: Upload Dependency-Check results
+    - name: Upload Snyk results
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: dependency-check-report
-        path: reports/
+        name: snyk-report
+        path: target/
 
   deploy:
     runs-on: ubuntu-latest

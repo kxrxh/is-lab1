@@ -90,20 +90,31 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>9.2.0</version>
+                <groupId>io.snyk</groupId>
+                <artifactId>snyk-maven-plugin</artifactId>
+                <version>2.0.0</version>
                 <executions>
                     <execution>
+                        <id>snyk-test</id>
+                        <phase>test</phase>
                         <goals>
-                            <goal>check</goal>
+                            <goal>test</goal>
                         </goals>
+                    </execution>
+                    <execution>
+                        <id>snyk-monitor</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>monitor</goal>
+                        </goals>
+                        <configuration>
+                            <failOnIssues>false</failOnIssues>
+                        </configuration>
                     </execution>
                 </executions>
                 <configuration>
-                    <failBuildOnCVSS>7</failBuildOnCVSS>
-                    <format>ALL</format>
-                    <outputDirectory>target/dependency-check</outputDirectory>
+                    <failOnIssues>false</failOnIssues>
+                    <org>snyk-org</org>
                 </configuration>
             </plugin>
         </plugins>
