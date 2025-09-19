@@ -15,7 +15,6 @@
     <description>Secure REST API with CI/CD</description>
     <properties>
         <java.version>17</java.version>
-        <snyk.skip>true</snyk.skip>
     </properties>
     <dependencies>
         <dependency>
@@ -88,36 +87,6 @@
                     <threshold>Low</threshold>
                     <xmlOutput>true</xmlOutput>
                     <xmlOutputDirectory>target/spotbugs</xmlOutputDirectory>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>io.snyk</groupId>
-                <artifactId>snyk-maven-plugin</artifactId>
-                <version>2.0.0</version>
-                <executions>
-                    <execution>
-                        <id>snyk-test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <skip>${snyk.skip}</skip>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>snyk-monitor</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>monitor</goal>
-                        </goals>
-                        <configuration>
-                            <skip>${snyk.skip}</skip>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <skip>${snyk.skip}</skip>
                 </configuration>
             </plugin>
         </plugins>
