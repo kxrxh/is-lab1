@@ -39,6 +39,15 @@ public class User {
         this.name = name;
     }
 
+    // Copy constructor for defensive copying
+    public User(User other) {
+        this.id = other.id;
+        this.username = other.username;
+        this.password = other.password;
+        this.name = other.name;
+        this.role = other.role;
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

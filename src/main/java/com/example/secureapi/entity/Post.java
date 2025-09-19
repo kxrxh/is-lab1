@@ -43,7 +43,7 @@ public class Post {
     public Post(String title, String content, User author) {
         this.title = title;
         this.content = content;
-        this.author = author;
+        this.author = new User(author); // Defensive copy to prevent EI_EXPOSE_REP2
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
@@ -74,11 +74,11 @@ public class Post {
     }
 
     public User getAuthor() {
-        return author;
+        return new User(author); // Defensive copy to prevent EI_EXPOSE_REP
     }
 
     public void setAuthor(User author) {
-        this.author = author;
+        this.author = new User(author); // Defensive copy to prevent EI_EXPOSE_REP2
     }
 
     public LocalDateTime getCreatedAt() {
