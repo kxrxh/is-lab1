@@ -50,9 +50,9 @@ public class ApiController {
         List<PostDto> postDtos = posts.stream()
                 .map(post -> new PostDto(
                         post.getId(),
-                        escapeHtml(post.getTitle()),
-                        escapeHtml(post.getContent()),
-                        escapeHtml(post.getAuthor().getName()),
+                        post.getTitle(),
+                        post.getContent(),
+                        post.getAuthor().getName(),
                         post.getCreatedAt(),
                         post.getUpdatedAt()
                 ))
@@ -74,9 +74,9 @@ public class ApiController {
 
         PostDto responseDto = new PostDto(
                 savedPost.getId(),
-                escapeHtml(savedPost.getTitle()),
-                escapeHtml(savedPost.getContent()),
-                escapeHtml(savedPost.getAuthor().getName()),
+                savedPost.getTitle(),
+                savedPost.getContent(),
+                savedPost.getAuthor().getName(),
                 savedPost.getCreatedAt(),
                 savedPost.getUpdatedAt()
         );
@@ -84,15 +84,6 @@ public class ApiController {
         return ResponseEntity.ok(responseDto);
     }
 
-    // XSS protection: Simple HTML escaping
-    private String escapeHtml(String text) {
-        if (text == null) return null;
-        return text.replace("&", "&amp;")
-                   .replace("<", "&lt;")
-                   .replace(">", "&gt;")
-                   .replace("\"", "&quot;")
-                   .replace("'", "&#x27;");
-    }
 
     // Inner class for data response
     public static class DataResponse {

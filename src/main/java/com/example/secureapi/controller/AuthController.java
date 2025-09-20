@@ -47,17 +47,71 @@ public class AuthController {
             return ResponseEntity.ok(response);
 
         } catch (AuthenticationException e) {
-            return ResponseEntity.badRequest().body("Invalid username or password");
+            return ResponseEntity.status(401).body(new ErrorResponse("Authentication failed", "Invalid username or password"));
         }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody User user) {
+    public ResponseEntity<?> register(@RequestBody User user) {
         try {
             User registeredUser = userService.registerUser(user.getUsername(), user.getPassword(), user.getName());
-            return ResponseEntity.ok("User registered successfully: " + registeredUser.getUsername());
+            return ResponseEntity.ok(new RegisterResponse("User registered successfully", registeredUser.getUsername()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Registration failed: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ErrorResponse("Registration failed", e.getMessage()));
+        }
+    }
+
+    // Response classes for structured JSON responses
+    public static class RegisterResponse {
+        private String message;
+        private String username;
+
+        public RegisterResponse(String message, String username) {
+            this.message = message;
+            this.username = username;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+    }
+
+    public static class ErrorResponse {
+        private String error;
+        private String details;
+
+        public ErrorResponse(String error, String details) {
+            this.error = error;
+            this.details = details;
+        }
+
+        public String getError() {
+            return error;
+        }
+
+        public void setError(String error) {
+            this.error = error;
+        }
+
+        public String getDetails() {
+            return details;
+        }
+
+        public void setDetails(String details) {
+            this.details = details;
         }
     }
 }
