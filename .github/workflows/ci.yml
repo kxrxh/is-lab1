@@ -44,16 +44,22 @@ jobs:
     - name: Run SpotBugs (SAST)
       run: |
         mvn compile
-        mvn com.github.spotbugs:spotbugs-maven-plugin:4.8.3.1:check
+        mvn com.github.spotbugs:spotbugs-maven-plugin:4.9.6.0:check
 
     # SCA: Software Composition Analysis with Snyk
     - name: Run Snyk (SCA)
-      uses: snyk/actions/cli@master
+      uses: snyk/actions/maven@master
+      continue-on-error: true
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        args: --file=pom.xml --severity-threshold=high
-      continue-on-error: true
+        args: --sarif-file-output=snyk.sarif --severity-threshold=high
+
+    - name: Upload SARIF to GitHub Code Scanning
+      uses: github/codeql-action/upload-sarif@v3
+      if: always()
+      with:
+        sarif_file: snyk.sarif
 
     - name: Upload Snyk results
       uses: actions/upload-artifact@v4
