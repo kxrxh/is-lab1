@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class UserService {
 
@@ -17,7 +19,7 @@ public class UserService {
 
     public User registerUser(String username, String password, String name) {
         if (userRepository.existsByUsername(username)) {
-            throw new RuntimeException("Username already exists");
+            throw new IllegalArgumentException("Username already exists");
         }
 
         User user = new User();
@@ -30,6 +32,6 @@ public class UserService {
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
     }
 }
